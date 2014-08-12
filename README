@@ -1,59 +1,28 @@
+# Lessons from LBS - Year One
 
+These notes are not in order of importance or implementation. They are just a collection of notes that I put down on paper throughout the year as things arose.
 
-                          // Flask //
+## Qualtrics
+	* Delete all test results before rolling out to principals/coaches.
+	* Keep better track of duplicate responses. Can we delete the unused response, or should that be archived? Could that archive live just in the "raw" downloaded files instead of on the Qualtrics server (which therefore have to be parsed out every week).
+	* If possible, provide list of keys and coach names to give to Qualtrics.
+		+ Otherwise, amend 'coaches' table (and all options queries) to filter by "survey_id"
+	* Use coachingEnrollment_id instead of leader_id as unique identifier, in order to protect against situations where the wrong NYCDOE employee was enrolled (i.e. "Chris Smith")
+	* 
 
-              web development, one drop at a time
+## Data Transformation
+	* Use Python module to pull goal data from LBS.
+	* Add function to module that parses quantitative data:
+		+ Replace null/empty values with 5 (DB code for NA)
+		+ Merge multi-part questions (e.g. "Three reasons you chose NYCLA") into array
+		+ Map Qualtrics Question IDs (e.g. Q14_6) -> behavior_id in database
+	* Do all the parsing server side with Python and/or PHP?
 
-
-    ~ What is Flask?
-
-      Flask is a microframework for Python based on Werkzeug
-      and Jinja2.  It's intended for getting started very quickly
-      and was developed with best intentions in mind.
-
-    ~ Is it ready?
-
-      It's still not 1.0 but it's shaping up nicely and is
-      already widely used.  Consider the API to slightly
-      improve over time but we don't plan on breaking it.
-
-    ~ What do I need?
-
-      Jinja 2.4 and Werkzeug 0.7 or later.
-      `pip` or `easy_install` will install them for you if you do
-      `pip install Flask`.  I encourage you to use a virtualenv.
-      Check the docs for complete installation and usage
-      instructions.
-
-    ~ Where are the docs?
-
-      Go to http://flask.pocoo.org/docs/ for a prebuilt version
-      of the current documentation.  Otherwise build them yourself
-      from the sphinx sources in the docs folder.
-
-    ~ Where are the tests?
-
-      Good that you're asking.  The tests are in the
-      flask/testsuite package.  To run the tests use the
-      `run-tests.py` file:
-
-        $ python run-tests.py
-
-      If it's not enough output for you, you can use the
-      `--verbose` flag:
-
-        $ python run-tests.py --verbose
-
-      If you just want one particular testcase to run you can
-      provide it on the command line:
-
-        $ python run-tests.py test_to_run
-
-    ~ Where can I get help?
-
-      Either use the #pocoo IRC channel on irc.freenode.net or
-      ask on the mailinglist: http://flask.pocoo.org/mailinglist/
-
-      See http://flask.pocoo.org/community/ for more resources.
-
-
+## Reporting
+	* Charts should be rewritten to use d3. Our reporting needs have outgrown RGraph. (IE8 and lower incompatible)
+	* Automate aggregate/coach-level reporting?
+	
+## General
+	* Digital distribution? Would that be useful/preferable to coaches? Would that help with KD's processing/distributing?
+	* With the move to Rackspace, should we house the LBS data in the same database as the participants DB?
+	
